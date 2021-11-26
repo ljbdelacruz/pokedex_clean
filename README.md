@@ -1,16 +1,29 @@
 # pokedex_clean
 
-A new Flutter project.
 
-## Getting Started
+# How to run Test
 
-This project is a starting point for a Flutter application.
+launch.json is already setup just go to run and debug and make sure pokemon_clean run all test is selected then press the play button you should be able to see the result of the test
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# Run project
+flutter run since flavors is not applied yet
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+# Dependencies Used
+
+* dartz
+* getx(get) - statemanagement/provider
+* dio 
+* data_connection_checker
+* shared_preferences
+* equatable
+
+
+
+
+
+
+
+
