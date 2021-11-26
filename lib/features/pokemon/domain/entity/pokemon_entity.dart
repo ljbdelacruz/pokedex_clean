@@ -20,9 +20,8 @@ class PokemonDetailsEntity extends Equatable{
   final double height;
   final String name;
   final List<PokemonTypeEntity> type;
-
-
-  PokemonDetailsEntity({this.abilities, this.height = 0, this.name="", this.type});
+  final String image;
+  PokemonDetailsEntity({this.abilities, this.height = 0, this.name="", this.type, this.image});
 }
 
 

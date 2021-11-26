@@ -40,3 +40,24 @@ class CoreHeaderMol extends StatelessWidget {
       );
   }
 }
+
+
+class ProgressIndicatorOrg extends StatelessWidget{
+
+  final double width;
+  final double height;
+  ProgressIndicatorOrg({this.width=0, this.height=0});
+
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      width:width,
+      height:height,
+      child:CircularProgressIndicator()
+    );
+  }
+
+  
+}

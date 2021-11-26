@@ -22,28 +22,30 @@ class PokemonDatabaseModel extends PokemonDatabaseEntity{
 
 class PokemonDetailsModel extends PokemonDetailsEntity{
 
-  PokemonDetailsModel({List<PokemonAbilityModel> abilities, double height=0, String name="", List<PokemonTypeModel> types}):super(abilities: abilities, height: height, name:name, type: types);
+  PokemonDetailsModel({List<PokemonAbilityModel> abilities, double height=0, String name="", List<PokemonTypeModel> types, String image}):super(abilities: abilities, height: height, name:name, type: types);
 
   factory PokemonDetailsModel.toMap(dynamic map){
     List<PokemonAbilityModel> abilities = [];
+    print(map["abilities"].toString());
     map["abilities"].forEach((e){
       abilities.add(PokemonAbilityModel.toMap(e));
     });
     List<PokemonTypeModel> types = [];
     map["types"].forEach((e){
-      types.add(PokemonTypeModel.toMap(e));
+      types.add(PokemonTypeModel.toMap(e["type"]));
     });
     return PokemonDetailsModel(
       abilities: abilities,
       height: double.parse(map["height"].toString()) ?? 0,
       name: map["name"] ?? "",
-      types: types
+      types: types,
+      image: map["sprites"]["front_default"] ?? ""
     );
   }
 
   factory PokemonDetailsModel.toMapList(dynamic map){
     return PokemonDetailsModel(
-      name: map["name"] ?? ""
+      name: map["name"] ?? "",
     );
   }
 

@@ -6,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:pokedex_clean/core/error/failures.dart';
 import 'package:pokedex_clean/features/pokemon/data/model/pokemon_model.dart';
 
+import 'pokemon_local_datasource.dart';
+
 abstract class PokemonRemoteDatasource{
   Future<Either<Failure, PokemonDetailsModel>> fetchPokemonDetail({String name});
   Future<Either<Failure, PokemonDatabaseModel>> fetchPokemonList();
@@ -16,7 +18,9 @@ class PokemonRemoteDatasourceImpl extends PokemonRemoteDatasource{
   final String baseUrl;
   final Map<String, dynamic> header;
   final Dio dio;
-  PokemonRemoteDatasourceImpl({this.baseUrl="", this.header, this.dio});
+  final PokemonLocalDatasource localDS;
+
+  PokemonRemoteDatasourceImpl({this.baseUrl="", this.header, this.dio, this.localDS});
 
   @override
   Future<Either<Failure, PokemonDetailsModel>> fetchPokemonDetail({String name}) async{
@@ -24,6 +28,7 @@ class PokemonRemoteDatasourceImpl extends PokemonRemoteDatasource{
     try{
       var response = await dio.get(baseUrl+'pokemon/'+name, options: Options(headers: header, contentType: "application/json"));
       if(response.statusCode == 200){
+        localDS.cachePokemonDetails(name, response.data);
         return Right(PokemonDetailsModel.toMap(response.data));
       }else if(response.statusCode == 502){
         return Left(BadGatewayFailure());
@@ -50,6 +55,7 @@ class PokemonRemoteDatasourceImpl extends PokemonRemoteDatasource{
     try{
       var response = await dio.get(baseUrl+'pokemon', options: Options(headers: header, contentType: "application/json"));
       if(response.statusCode == 200){
+        localDS.cachePokemonList(response.data);
         return Right(PokemonDatabaseModel.toMap(response.data));
       }else if(response.statusCode == 502){
         return Left(BadGatewayFailure());

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class RestClient {
-  String userAgent = "Dart/8396d73bcd290";
+  String userAgent = "";
   Dio dio;
   RestClient(){
     this.dio=Dio();
@@ -25,24 +25,4 @@ class RestClient {
     );
     return ddio;
   }
-
-  Map<String, dynamic> loginHeader(){
-    return {
-      "Content-Type":"application/x-www-form-urlencoded",
-      "Accept":"application/json",
-      "User-Agent":userAgent,
-    };
-  }
-
-
-  Map<String, dynamic> authHeader(String type, String token){
-    return {
-      "Content-Type":"application/x-www-form-urlencoded",
-      "Authorization": type+" "+token,
-      "User-Agent":userAgent,
-    };
-  }
-
-
-
 }

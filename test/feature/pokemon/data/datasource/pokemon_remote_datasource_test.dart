@@ -1,28 +1,25 @@
-
-
-
-
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pokedex_clean/core/device/device_info.dart';
-import 'package:pokedex_clean/core/error/failures.dart';
 import 'package:pokedex_clean/core/network/rest_client.dart';
 import 'package:pokedex_clean/core/test/test_config.dart';
+import 'package:pokedex_clean/features/pokemon/data/datasource/pokemon_local_datasource.dart';
 import 'package:pokedex_clean/features/pokemon/data/datasource/pokemon_remote_datasource.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main(){
 
   PokemonRemoteDatasourceImpl remoteDS;
   TestConfig testConfig;
   RestClient restClient;
+  PokemonLocalDatasource localDS;
+  SharedPreferences sharedPref;
 
-  setUp((){
+  setUp(() async{
     testConfig = TestConfig();
     restClient = RestClient();
-    remoteDS = PokemonRemoteDatasourceImpl(baseUrl: testConfig.apiUrl, header: {}, dio:restClient.getDioDebugging());
+    sharedPref=await SharedPreferences.getInstance();
+    localDS = PokemonLocalDatasourceImpl(sharedPref: sharedPref);
+    remoteDS = PokemonRemoteDatasourceImpl(baseUrl: testConfig.apiUrl, header: {}, dio:restClient.getDioDebugging(), localDS:localDS);
   });
-
-
 
   group("testing fetching all pokemon list", (){
     test("success", () async{
