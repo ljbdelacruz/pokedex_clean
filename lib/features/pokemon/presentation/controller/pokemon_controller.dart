@@ -80,8 +80,9 @@ class DisplayPokemonListOrgController extends GetxController{
 
 
   fetchPokemons() async{
-      var result = await service.getAllPokemonUseCase().call(NoParams());
+    try{
       this.updateIsProcessing(true);
+      var result = await service.getAllPokemonUseCase().call(NoParams());
       result.fold((l){
         print(l);
         this.updateIsProcessing(false);
@@ -89,6 +90,10 @@ class DisplayPokemonListOrgController extends GetxController{
         this.pokemons = r;
         this.updateIsProcessing(false);
       });
+    }catch(e){
+      print("ERROR");
+      print(e);
+    }
   }
 }
 

@@ -23,7 +23,7 @@ class PokemonDIService extends GetxController {
   NetworkInfo _networkInfo;
   FetchPokemonDetailUseCase _fetchPokemonDetailUseCase;
   PokemonLocalDatasource _localDS;
-  SharedPreferences sharedPref;
+  SharedPreferences _sharedPref;
 
   
   FetchPokemonDetailUseCase getPokemonDetailUseCase(){
@@ -31,24 +31,30 @@ class PokemonDIService extends GetxController {
   }
   FetchAllPokemonUseCase _fetchAllPokemonUseCase;
   FetchAllPokemonUseCase getAllPokemonUseCase(){
-    return _fetchAllPokemonUseCase;
+    if( _fetchAllPokemonUseCase != null){
+      return _fetchAllPokemonUseCase;
+    }else{
+      print("Use case is null");
+      return _fetchAllPokemonUseCase;
+    }
   }
 
   PokemonDIService(){
     setup();
   }
-
-  setup()async{
+  setup() async{
     this._config = new MyConfig();
     _restClient = new RestClient();
     _dcChecker = new DataConnectionChecker();
-    sharedPref = await SharedPreferences.getInstance();
+    this._sharedPref = await SharedPreferences.getInstance();
+    _localDS = PokemonLocalDatasourceImpl(sharedPref: _sharedPref);
+    print("LOCAL DS Initialized");
     _networkInfo = new NetworkInfoImpl(_dcChecker);
-    _localDS = PokemonLocalDatasourceImpl(sharedPref: sharedPref);
-    _remoteDS = new PokemonRemoteDatasourceImpl(baseUrl: _config.apiUrl, header:{}, dio: _restClient.dio, localDS:_localDS);
+    _remoteDS = new PokemonRemoteDatasourceImpl(baseUrl: _config.apiUrl, header:{}, dio: _restClient.dio, localDS: _localDS);
     _repo = new PokemonRepositoryImpl(remoteDS: _remoteDS, networkInfo: _networkInfo, localDS:_localDS);
-
+    print("Initializing usecase ");
     _fetchPokemonDetailUseCase = FetchPokemonDetailUseCase(_repo);
     _fetchAllPokemonUseCase=FetchAllPokemonUseCase(_repo);
+    print("Complete initialization");
   }
 }

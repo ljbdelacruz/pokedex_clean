@@ -287,7 +287,7 @@ class DisplayPokemonInfoTemplate extends StatelessWidget{
                   Row(children: typesDisplay)
                 ])
               ),
-              CachedNetworkImage(imageUrl: _.pokemonDetail.image, width:imageSize, height:imageSize)
+              CachedNetworkImage(imageUrl: _.pokemonDetail.image ?? "", width:imageSize, height:imageSize)
             ]);
           }else{
             return Container(child:Text("No Pokemon Data Available"));
