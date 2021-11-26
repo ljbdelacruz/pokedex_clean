@@ -318,6 +318,8 @@ class DisplayPokemonListTemplate extends StatelessWidget{
 
 class PokemonPageManagementTemplate extends StatelessWidget{
   final PokemonPageManagementTemplateController controller = Get.put(PokemonPageManagementTemplateController());
+  
+
 
   @override
   Widget build(BuildContext context) {

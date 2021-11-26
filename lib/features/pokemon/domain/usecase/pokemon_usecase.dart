@@ -36,7 +36,6 @@ class FetchAllPokemonUseCase implements UseCase<PokemonDatabaseEntity, NoParams>
   Future<Either<Failure, PokemonDatabaseEntity>> call(NoParams param) async{
     // TODO: implement call
     return await repo.fetchAllPokemons();
-
   }
 
 

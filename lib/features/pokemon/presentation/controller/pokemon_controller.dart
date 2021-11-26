@@ -70,7 +70,7 @@ class DisplayPokemonListOrgController extends GetxController{
   PokemonDIService service = Get.put(PokemonDIService());
   PokemonDatabaseEntity pokemons;
   DisplayPokemonListOrgController(){
-    this.fetchPokemons();
+    fetchPokemons();
   }
   bool isProcessing=false;
   updateIsProcessing(bool v){
@@ -80,15 +80,15 @@ class DisplayPokemonListOrgController extends GetxController{
 
 
   fetchPokemons() async{
-    var result = await service.getAllPokemonUseCase().call(NoParams());
-    this.updateIsProcessing(true);
-    result.fold((l){
-      print(l);
-      this.updateIsProcessing(false);
-    }, (r){
-      this.pokemons = r;
-      this.updateIsProcessing(false);
-    });
+      var result = await service.getAllPokemonUseCase().call(NoParams());
+      this.updateIsProcessing(true);
+      result.fold((l){
+        print(l);
+        this.updateIsProcessing(false);
+      }, (r){
+        this.pokemons = r;
+        this.updateIsProcessing(false);
+      });
   }
 }
 
