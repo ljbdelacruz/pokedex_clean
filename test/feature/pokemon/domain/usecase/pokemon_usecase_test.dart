@@ -36,6 +36,7 @@ void main(){
   TestConfig testConfig;
   RestClient restClient;
   FetchAllPokemonUseCase fetchAllUseCase;
+  FetchPokemonDetailUseCase fetchPokemonDetailsUseCase;
 
   setUp((){
     testConfig = new TestConfig();
@@ -46,6 +47,7 @@ void main(){
     remoteDS = PokemonRemoteDatasourceImpl(baseUrl:testConfig.apiUrl, header:{}, dio: restClient.getDioDebugging(), localDS: localDS);
     repo = PokemonRepositoryImpl(remoteDS: remoteDS, networkInfo: networkInfo, localDS: localDS);
     fetchAllUseCase = FetchAllPokemonUseCase(repo);
+    fetchPokemonDetailsUseCase=FetchPokemonDetailUseCase(repo);
   });
 
 
@@ -74,5 +76,20 @@ void main(){
         print(r.pokemons.length);
       });
     });
+  });
+
+
+  group("testing pokemon details usecase", (){
+
+
+    test("success", () async{
+      var result = await fetchPokemonDetailsUseCase.call(FetchPokemonDetailUseCaseParam(name:"bulbasaur"));
+      result.fold((l) => null, (r){
+        print(r.image);
+        expect(r.image, isNotNull);
+      });
+    });
+
+
   });
 }

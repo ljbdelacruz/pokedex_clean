@@ -50,7 +50,7 @@ class PokemonDIService extends GetxController {
     _localDS = PokemonLocalDatasourceImpl(sharedPref: _sharedPref);
     print("LOCAL DS Initialized");
     _networkInfo = new NetworkInfoImpl(_dcChecker);
-    _remoteDS = new PokemonRemoteDatasourceImpl(baseUrl: _config.apiUrl, header:{}, dio: _restClient.dio, localDS: _localDS);
+    _remoteDS = new PokemonRemoteDatasourceImpl(baseUrl: _config.apiUrl, header:{}, dio: _restClient.getDioDebugging(), localDS: _localDS);
     _repo = new PokemonRepositoryImpl(remoteDS: _remoteDS, networkInfo: _networkInfo, localDS:_localDS);
     print("Initializing usecase ");
     _fetchPokemonDetailUseCase = FetchPokemonDetailUseCase(_repo);
