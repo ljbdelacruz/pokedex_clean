@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:pokedex_clean/core/theme/core_atom.dart';
 import 'package:pokedex_clean/core/theme/core_theme.dart';
 import 'package:pokedex_clean/core/theme/theme_di.dart';
-import 'package:pokedex_clean/features/pokemon/presentation/atomic/pokemon_atomic.dart';
 import 'package:pokedex_clean/features/pokemon/presentation/controller/pokemon_di.dart';
 import 'package:pokedex_clean/pages/home/controller/home_controller.dart';
 
@@ -91,7 +90,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       builder:(_){
         switch(_.pageTemplate){
           case 1:
-            return PokemonPageManagementTemplate();
+            // return P();
           default:
             return HomePageTemplate();
         }
